@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    block content
+    .sidebar
+      a(href="/sign-up") Sign Up 
+      |  
+      form(action="/login", method="post") 
+        label 
+          input(type="text", name="userName", placeholder="Username")
+          input(type="password", name="password", placeholder="Password")
+        button(type="submit") Login

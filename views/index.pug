@@ -1,0 +1,10 @@
+extends layout
+
+block content
+
+  h1= title
+  p Welcome to #{title}
+  if (locals.currentUser)
+    h4 Welcome #{locals.currentUser.firstName}
+  if (error)
+    p= error
