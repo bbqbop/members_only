@@ -6,6 +6,8 @@ block content
   if (!locals.currentUser)
     p Welcome to #{title}
     p <i>Sign up to create messages, upgrade to member status to see full details or admin to delete messages.</i>
+  if (error)
+    b= error
 
   if (locals.currentUser)
     h4 Welcome #{locals.currentUser.firstName}
@@ -15,5 +17,4 @@ block content
         textarea(name="message", cols="30", rows="10") New Message 
       button(type="submit") Submit
   block message-board
-  if (error)
-    p= error
+  

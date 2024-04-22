@@ -89,7 +89,8 @@ exports.logIn = (req, res, next) => {
         }
         if (!user) {
             return res.render('index', {
-                error: info.message // Use info.message for error message
+                title: "Message Board",
+                error: info.message
             });
         }
         req.logIn(user, (err) => {
