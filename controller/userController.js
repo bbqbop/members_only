@@ -5,7 +5,7 @@ const passport = require('passport')
 const User = require("../models/user")
 const Message = require("../models/message");
 
-const { genPassword, validPassport } = require("../lib/passwordUtils");
+const { generatePassword } = require("../lib/passwordUtils")
 
 exports.signUpGET = (req, res, next) => {
     res.render("sign-up", {
@@ -62,7 +62,7 @@ exports.signUpPOST = asyncHandler(async (req, res, next) => {
         username, 
         firstName, 
         lastName, 
-        password: generatePassword(password)
+        password: await generatePassword(password)
     })
 
     if (!validationErrors.isEmpty()) {
