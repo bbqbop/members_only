@@ -9,6 +9,9 @@ exports.index = asyncHandler(async (req, res, next) => {
         .find()
         .sort({date: -1})
         .populate("author");
+    if (messages.isEmpty()){
+
+    }
     res.render("message-board", {
         title: "Message Board",
         messages
@@ -18,19 +21,17 @@ exports.index = asyncHandler(async (req, res, next) => {
 exports.newMessage = asyncHandler(async (req, res, next) => {
     if (req.body.message == 'Make me a member!') {
         await User.findByIdAndUpdate(req.user._id, { isMember: true })
-        res.redirect("/")
     }
     if (req.body.message == 'Make me an admin!') {
         await User.findByIdAndUpdate(req.user._id, { isAdmin: true })
-        res.redirect("/")
     }
-    else {
-        await new Message({
-            message: req.body.message, 
-            author: req.user._id,
-        }).save()
-        res.redirect("/")
-    }
+    
+    await new Message({
+        message: req.body.message, 
+        author: req.user._id,
+    }).save()
+    res.redirect("/")
+    
 })
 
 exports.deleteMessage = asyncHandler(async (req, res, next) => {
