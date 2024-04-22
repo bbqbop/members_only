@@ -5,11 +5,16 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     block content
-    .sidebar
-      a(href="/sign-up") Sign Up 
-      |  
-      form(action="/login", method="post") 
-        label 
-          input(type="text", name="userName", placeholder="Username")
-          input(type="password", name="password", placeholder="Password")
-        button(type="submit") Login
+
+    if (!(url == '/sign-up'))  
+      .sidebar
+        if (!locals.currentUser)
+          form(action="/login", method="post") 
+            label 
+              input(type="text", name="username", placeholder="username")
+              input(type="password", name="password", placeholder="Password")
+            button(type="submit") Login
+          a(href="/sign-up") Sign Up 
+          
+        if (locals.currentUser) 
+          a(href="/logout") Logout 

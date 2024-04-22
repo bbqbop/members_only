@@ -3,8 +3,17 @@ extends layout
 block content
 
   h1= title
-  p Welcome to #{title}
+  if (!locals.currentUser)
+    p Welcome to #{title}
+    p <i>Sign up to create messages, upgrade to member status to see full details or admin to delete messages.</i>
+
   if (locals.currentUser)
     h4 Welcome #{locals.currentUser.firstName}
+    p Status: !{locals.currentUser.isAdmin ? "Admin <i>(Detailed view, create & delete messages)</i>" : locals.currentUser.isMember ? "Member <i>(detailed view, create messages)" : "User <i>(Read & Create messages)</i>"}
+    form(action="/new-message", method="post") 
+      label
+        textarea(name="message", cols="30", rows="10") New Message 
+      button(type="submit") Submit
+  block message-board
   if (error)
     p= error

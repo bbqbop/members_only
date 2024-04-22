@@ -1,14 +1,23 @@
 const asyncHandler = require('express-async-handler')
 const { body, validationResult } = require("express-validator");
-const bcrypt = require('bcrypt');
 const passport = require('passport')
 
 const User = require("../modules/user")
+const Message = require("../modules/message");
 
-exports.signUp = asyncHandler(async (req, res, next) => {
+const { genPassword, validPassport } = require("../lib/passwordUtils");
+
+exports.signUpGET = (req, res, next) => {
+    res.render("sign-up", {
+        title: "Sign Up",
+        url: req.url
+    })
+}
+
+exports.signUpPOST = asyncHandler(async (req, res, next) => {
 
     const validationRules = [
-        body('userName')
+        body('username')
             .trim()
             .toLowerCase()
             .isLength({ min: 1 })
@@ -47,12 +56,13 @@ exports.signUp = asyncHandler(async (req, res, next) => {
     await Promise.all(validationRules.map(rule => rule.run(req)));
     const validationErrors = validationResult(req);
 
-    const { userName, firstName, lastName, password } = req.body
-
-    const hash = await bcrypt.hash(password, 10)
+    const { username, firstName, lastName, password } = req.body
     
     const user = new User({
-        userName, firstName, lastName, password: hash
+        username, 
+        firstName, 
+        lastName, 
+        password: generatePassword(password)
     })
 
     if (!validationErrors.isEmpty()) {
@@ -73,10 +83,8 @@ exports.signUp = asyncHandler(async (req, res, next) => {
 })
 
 exports.logIn = (req, res, next) => {
-    console.log('LOGIN')
     passport.authenticate("local", (err, user, info) => {
         if (err) {
-            console.log(err)
             return next(err);
         }
         if (!user) {
@@ -93,3 +101,11 @@ exports.logIn = (req, res, next) => {
     })(req, res, next);
 }
 
+exports.logOut = (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect("/");
+    });
+}

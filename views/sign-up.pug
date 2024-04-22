@@ -1,6 +1,7 @@
 extends layout 
 
 block content 
+  a(href="/") Back 
   h1= title
 
   if (errors) 
@@ -8,14 +9,14 @@ block content
       p= err.msg
 
   form(action="?", method="post") 
-    label(for="userName") User Name 
-      input(type="text", name="userName", placeholder="User Name", required="true", value= user ? user.userName : '') 
-    label(for="firstName") First Name 
+    label(for="username") 
+      input(type="text", name="username", placeholder="User Name", required="true", value= user ? user.username : '') 
+    label(for="firstName")  
       input(type="text", name="firstName", placeholder="First Name", required="true", value= user ? user.firstName : '')   
-    label(for="lastName") Last Name 
+    label(for="lastName")  
       input(type="text", name="lastName", placeholder="Last Name", required="true", value= user ? user.lastName : '')  
-    label(for="password") Password 
+    label(for="password")  
       input(type="password", name="password", required="true", placeholder="Password")
-    label(for="confirmPassword") Confirm Password 
+    label(for="confirmPassword") 
       input(type="password", name="confirmPassword", required="true" placeholder="Confirm Password")  
     button(type="submit") Submit

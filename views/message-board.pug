@@ -1,0 +1,15 @@
+extends index 
+
+block message-board
+
+  .message-board
+    if messages 
+      each message in messages 
+        p 
+          if locals.currentUser && locals.currentUser.isMember 
+            span#author #{message.author.username} 
+            span#time #{message.time}
+          span#message >> #{message.message} 
+          if locals.currentUser && locals.currentUser.isAdmin 
+            span#delete 
+              a(href=`/delete-message/${message._id}`) Delete Message  
