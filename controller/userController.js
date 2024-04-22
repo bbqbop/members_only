@@ -2,8 +2,8 @@ const asyncHandler = require('express-async-handler')
 const { body, validationResult } = require("express-validator");
 const passport = require('passport')
 
-const User = require("../modules/user")
-const Message = require("../modules/message");
+const User = require("../models/user")
+const Message = require("../models/message");
 
 const { genPassword, validPassport } = require("../lib/passwordUtils");
 
