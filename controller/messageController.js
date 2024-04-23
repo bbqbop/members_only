@@ -9,9 +9,7 @@ exports.index = asyncHandler(async (req, res, next) => {
         .find()
         .sort({date: -1})
         .populate("author");
-    if (messages.isEmpty()){
 
-    }
     res.render("message-board", {
         title: "Message Board",
         messages
